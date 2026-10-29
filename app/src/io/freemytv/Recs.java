@@ -58,15 +58,15 @@ final class Recs {
 
     interface Listener { void onRecs(); }
 
-    // TMDB's own mirror of api.themoviedb.org, on the images' domain: some ISPs block the other name (Jio, #327)
+    // TMDB mirror on the images domain
     private static final String API = "https://api.tmdb.org/3";
     /** The most cards per tab and hour (Prefs.cards() picks how many, 3 by default); the home screen shows 3 at a time and scrolls. */
     static final int MAX_CARDS = 6;
 
-    /** The backdrops: on a 720p UI, TMDB's 1280-wide copy shows the same and is lighter to download and decode. */
-    private static final String IMAGES = "https://image.tmdb.org/t/p/" + (Backdrop.W <= 1280 ? "w1280" : "original");
+    /** The backdrops: always use w1280 for fast download and crisp 1080p rendering */
+    private static final String IMAGES = "https://image.tmdb.org/t/p/w1280";
     private static final String POSTERS = "https://image.tmdb.org/t/p/w500";
-    /** TMDB's Animation genre (movies and shows: cartoons and anime), left out with hide_animation=true. */
+    /** TMDB Animation genre (movies and shows: cartoons and anime), left out with hide_animation=true. */
     private static final int ANIMATION = 16;
     private static final long LIST_EVERY = 6 * 3600_000L;
     /** Bump when what is saved for each title changes (the saved list is discarded and fetched again). */
@@ -365,7 +365,7 @@ final class Recs {
     }
 
     private File imageFile(Pick p) {
-        return new File(new File(context.getCacheDir(), "recs"), p.backdrop.replace("/", ""));
+        return new File(new File(context.getCacheDir(), "recs_v2"), p.backdrop.replace("/", ""));
     }
 
     /** With a key: fetches the list if stale or the time of day (morning/afternoon/night) changed; then the details. */
