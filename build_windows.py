@@ -47,14 +47,22 @@ if os.path.exists(config_props):
                 props[k.strip()] = v.strip().strip('"\'')
 
 tmdb_key = props.get("tmdb_key", "")
+watchmode_key = props.get("watchmode_key", "")
+plex_url = props.get("plex_url", "")
+plex_token = props.get("plex_token", "")
 tmdb_region = props.get("tmdb_region", "BR")
-latitude = props.get("latitude", "-23.5505")
-longitude = props.get("longitude", "-46.6333")
-city = props.get("city", "São Paulo")
+latitude = props.get("latitude", "-23.2114")
+longitude = props.get("longitude", "-46.8239")
+city = props.get("city", "Várzea Paulista")
 language = props.get("language", "pt")
 currency = props.get("currency", "BRL")
 temperature = props.get("temperature", "C")
+hide_services = props.get("hide_services", "")
+theme = props.get("theme", "auto")
 disable_assistant = props.get("disable_assistant", "false").lower() == "true"
+show_crypto = props.get("show_crypto", "true").lower() == "true"
+hide_animation = props.get("hide_animation", "false").lower() == "true"
+screensaver = props.get("screensaver", "true").lower() == "true"
 
 out_dir = os.path.join(ROOT, "out")
 gen_dir = os.path.join(out_dir, "gen", "io", "freemytv")
@@ -73,6 +81,9 @@ final class Config {{
     private Config() {{}}
 
     static final String TMDB_KEY = "{tmdb_key}";
+    static final String WATCHMODE_KEY = "{watchmode_key}";
+    static final String PLEX_URL = "{plex_url}";
+    static final String PLEX_TOKEN = "{plex_token}";
     static final String TMDB_REGION = "{tmdb_region}";
     static final String LATITUDE = "{latitude}";
     static final String LONGITUDE = "{longitude}";
@@ -80,7 +91,13 @@ final class Config {{
     static final String LANGUAGE = "{language}";
     static final String CURRENCY = "{currency}";
     static final String TEMPERATURE = "{temperature}";
+    static final String HIDE_SERVICES = "{hide_services}";
+    static final String THEME = "{theme}";
     static final boolean DISABLE_ASSISTANT = {"true" if disable_assistant else "false"};
+    static final boolean SHOW_CRYPTO = {"true" if show_crypto else "false"};
+    static final boolean HIDE_ANIMATION = {"true" if hide_animation else "false"};
+    static final boolean SCREENSAVER = {"true" if screensaver else "false"};
+    static final boolean GENERIC = false;
 }}
 """
 with open(os.path.join(gen_dir, "Config.java"), "w", encoding="utf-8") as f:
